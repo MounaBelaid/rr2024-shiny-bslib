@@ -1,0 +1,102 @@
+/*-- scss:defaults --*/
+
+// font family
+$font-family-sans-serif: 'Roboto', Arial, sans-serif !default;
+$presentation-heading-font: 'Roboto Slab', Times New Roman, serif  !default;
+
+// headings
+$presentation-h1-font-size: 1.6em;
+$presentation-h2-font-size: 1.3em;
+$presentation-h3-font-size: 1.15em;
+$presentation-h4-font-size: 1.1em;
+$presentation-heading-color: #124f83 !default;
+$text-align-h2: center;
+
+// general
+$presentation-font-size-root: 32px;
+$presentation-line-height: 1.5em;
+$body-color: #000000;
+$link-color: #124f83;
+$body-bg: #ffffff;
+
+.blackbox {
+  color: #000000;
+  background-color: transparent;
+  margin: 1px;
+  padding: 5px 2px 5px 2px;
+  height: 205px;
+  border: 2px solid;
+}
+
+.add-space{
+padding-right: 3%;
+}
+
+.reveal .footer {
+  color: #000000;
+  padding-bottom: 10px;
+}
+
+// code
+$code-color: #35bff2 !default;
+$code-block-border-color: #000000;
+$code-block-font-size: 0.7em;
+$code-block-bg: #fafafa;
+
+/*-- scss:rules --*/
+
+.reveal .slide-logo {
+    z-index: 2;
+    left: unset !important;
+    height: unset !important;
+    top: unset !important;
+    width: 150px !important;
+    max-width: unset !important;
+    max-height: unset !important;
+}
+
+.subtitle {
+  color: #0e9adb;
+  font-size: $presentation-h2-font-size;
+  font-family: $presentation-heading-font;
+}
+
+.author {
+  color: #0e9adb;
+  font-size: $presentation-h2-font-size;
+  font-family: $presentation-heading-font;
+}
+
+.author a {
+  color: #0e9adb;
+  font-size: $presentation-h2-font-size;
+  font-family: $presentation-heading-font;
+}
+
+.date {
+  color: #0e9adb;
+  font-size: $presentation-h2-font-size;
+  font-family: $presentation-heading-font;
+}
+
+.reveal .slides {
+  margin-left: 0 !important;
+}
+
+.reveal .slide-number {
+  font-family: $presentation-heading-font;
+}
+
+.slide-number, .reveal.has-logo .slide-number {
+  bottom: 10px !important;
+  right: 10px !important;
+  top: unset !important;
+  color: $body-color !important;
+}
+
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2);
+  color: #124f83;
+  height: 1.5%;
+}
+  

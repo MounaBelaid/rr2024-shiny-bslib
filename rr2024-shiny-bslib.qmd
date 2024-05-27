@@ -1,0 +1,273 @@
+---
+title: "Développer des applications Shiny élégantes et performantes avec {bslib}"
+subtitle: "Mouna Belaid"
+author: "[Rencontres R](https://rr2024.sciencesconf.org/)"
+lang: fr
+date: "2024-06-14"
+date-format: long
+format: 
+  revealjs:
+    theme: custom.scss
+    code-link: true
+    footer: "{{< fa envelope >}} [belaid.mounaa@gmail.com](mailto:belaid.mounaa@gmail.com) {{< fa globe >}} [mounabelaid.netlify.app](https://mounabelaid.netlify.app/) {{< fa brands linkedin >}} [mouna-belaid](https://www.linkedin.com/in/mouna-belaid-b10300112/)"
+    slide-number: c
+    logo: images/rr2024.jpg
+    code-block-height: 650px
+execute: 
+  eval: false
+  echo: true
+---
+
+## Qui suis-je ?
+
+::: columns
+::: column
+Ingénieure en Statisitque et Analyse de l'Information.
+
+Consultante Data chez ArData.
+
+Membre active dans la communauté R :
+
+-   Lead de [R-Ladies Paris](https://www.meetup.com/fr-FR/rladies-paris/)
+-   Membre de [R-Ladies Global](https://rladies.org/)
+-   Modératrice/Speaker dans des conférences autour de R (Shiny Conf, SatRdays, useR Conference, Posit Conf)
+:::
+
+::: column
+![](images/logo_rladiesparis.jpg){fig-align="center" style="margin-top:240px; width:180px;"}
+:::
+:::
+
+## Plan
+
+
+
+## Pourquoi devriez-vous vous intéresser à la mise en forme de vos applications Shiny ?
+
+-   Améliorer l'expérience globale de l'utilisateur.
+-   Facilier la prise de décision
+-   Améliorer la connaissance et la compréhension des données
+
+## C'est quoi {bslib} ?
+
+Le package R bslib fournit une boîte à outils UI moderne pour Shiny et R Markdown basée sur Bootstrap, directement depuis R sans écrire du CSS ou HTML. Il fournit des versions spéciales de bootstrap 4 et 3 qui fonctionnent uniquement avec Shiny et R Markdown.
+
+## C'est quoi Bootstrap ?
+
+-   Bootstrap est un framework open-source de développement web front-end largement utilisé.
+
+-   Il offre une collection de composants, de styles et de scripts JavaScript prêts à l'emploi pour la conception de sites web réactifs.
+
+-   Il est basé sur HTML, CSS et JavaScript, et propose une grille flexible, des composants de formulaire, des boutons, des menus déroulants, des modales, des alertes, et bien d'autres fonctionnalités.
+
+## Avantages de passer à {bslib}
+
+
+
+# Débuter avec {bslib} dans Shiny {.center-title-slide}
+
+## Améliorer l'apparence de votre application
+
+```{r}
+library(shiny)
+library(bslib)
+ui <- fluidPage(
+  theme = bs_theme()
+)
+```
+
+::: fragment
+::: {.column .add-space width="48%"}
+::: {style="text-align: center"}
+`Bootstrap 3`
+:::
+
+![](images/without_bslib.png){.absolute top="260" left="0" width="500"}
+:::
+
+::: {.column width="48%"}
+::: {style="text-align: center"}
+`Bootstrap 5`
+:::
+
+![](images/with_bslib.png){.absolute top="260" right="0" width="500"}
+:::
+:::
+
+## Améliorer l'apparence de votre application
+
+```{r}
+bs_theme(
+  version = version_default(),
+  preset = NULL,
+  ...,
+  bg = NULL,
+  fg = NULL,
+  primary = NULL,
+  secondary = NULL,
+  success = NULL,
+  info = NULL,
+  warning = NULL,
+  danger = NULL,
+  base_font = NULL,
+  code_font = NULL,
+  heading_font = NULL,
+  font_scale = NULL,
+  bootswatch = NULL
+)
+```
+
+## Prévisualiser un thème Bootstrap personnalisé
+
+```{r}
+library(bslib)
+theme <- bs_theme(bg = "white", fg = "#124f83", primary = "#35bff2")
+bs_theme_preview(theme)
+```
+
+![](images/theme_demo.png){.absolute top="210" width="100%"}
+
+## Personnalisation instantanée des thèmes avec bs_themer()
+
+::: {.column .add-space width="48%"}
+::: {style="text-align: center"}
+`UI`
+:::
+
+```{r}
+#| code-line-numbers: "3-4"
+ui <- fluidPage(
+  titlePanel("Penguin Dashboard"),
+  theme = bs_theme(
+    bootswatch = "minty"),
+  sidebarLayout(
+    sidebarPanel(...),
+    mainPanel(...)))
+```
+:::
+
+::: {.column width="48%"}
+::: {style="text-align: center"}
+`Server`
+:::
+
+```{r}
+#| code-line-numbers: "2"
+server <- function(input, output) {
+  bs_themer()
+  ...
+}
+```
+:::
+
+![](images/preview_bs_themer.png){.absolute top="340" width="100%"}
+
+# Passage de {shinydashboard} à {bslib}
+
+## Passage de {shinydashboard} à {bslib}
+
+### `shinydashboard`
+
+![](images/shinydashboard_app.png){.absolute top="100" width="80%"}
+
+### `bslib`
+
+![](images/bslib_app.png){.absolute top="350" width="80%"}
+
+## Composants de {bslib}
+
+### Mise en forme de la page
+
+::: {.column .add-space width="48%"}
+::: {style="text-align: center"}
+`shinydashboard`
+:::
+
+```{r}
+#| code-line-numbers: "2,9,11"
+# UI
+ui <- dashboardPage(
+  dashboardHeader(
+    title = "Penguin Dashboard"),
+  dashboardSidebar(...),
+  dashboardBody(
+    tabItems(
+      tabItem(
+        tabName = "dashboard", ...),
+      tabItem(
+        tabName = "summary", ...)
+      )
+    )
+  )
+```
+:::
+
+::: {.column width="48%"}
+::: {style="text-align: center"}
+`bslib`
+:::
+
+```{r}
+#| code-line-numbers: "3,12,13"
+# UI
+ui <- function() {
+  page_navbar(
+    title = "Penguin Dashboard",
+    sidebar = sidebar(
+      ...
+    ),
+    theme = bs_theme(
+      version = 5,
+      bootswatch = "materia"
+    ),
+    nav_panel(title = "Dashboard", ...),
+    nav_panel(title = "Summary", ...)
+  )
+}
+```
+:::
+
+## Composants de {bslib}
+
+### nav_menu() et nav_item()
+
+::: {.column .add-space width="48%"}
+```{r}
+#| code-line-numbers: "14-18"
+# UI
+ui <- function() {
+  page_navbar(
+    title = "Penguin Dashboard",
+    sidebar = sidebar(
+      ...
+    ),
+    theme = bs_theme(
+      version = 5,
+      bootswatch = "materia"
+    ),
+    nav_panel(title = "Dashboard", ...),
+    nav_panel(title = "Summary", ...),
+    nav_menu("Resources",
+             nav_item(a("Documentation", href = "https://www.example.com", target = "_blank")),
+             nav_item(a("Replay", href = "https://www.youtube.com/channel/UCID33pDULsQg2y4FVlv4CnQ", target = "_blank")),
+             nav_item(a("Data Source", href = "https://allisonhorst.github.io/palmerpenguins/", target = "_blank"))
+           )
+    )
+}
+```
+:::
+
+::: {.column width="48%"}
+![](images/resources_menu.png){.absolute width="60%"}
+:::
+
+## Composants de {bslib}
+
+| Fonction     | Opération                                          |
+|--------------|----------------------------------------------------|
+| nav_spacer() | Contrôler l'alignement sur la barre de navigation  |
+| nav_show()   | Afficher dynamiquement des éléments de navigation  |
+| nav_hide()   | Cacher dynamiquement des éléments de navigation    |
+| nav_insert() | Insérer dynamiquement des éléments de navigation   |
+| nav_remove() | Supprimer dynamiquement des éléments de navigation |
+
